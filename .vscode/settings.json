@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "string.h": "c",
+    "type_traits": "c",
+    "stdio.h": "c",
+    "phonedatamanager.h": "c",
+    "commonhelpers.h": "c"
+  }
+}
