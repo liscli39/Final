@@ -8,8 +8,8 @@
 
 // System Libraries
 #include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
+#include <math.h> 
 
 // User-Defined Libraries
 #include "commonHelpers.h"
@@ -63,4 +63,12 @@ void getFileCString(FILE* file, char* string, int max, char endSymbol) {
 
     string[id] = input;
   }
+}
+
+void timeConvert(double time, int clock[]) {
+  clock[0] = (int) time;
+  double decimal = time - clock[0];
+  double second = decimal * 60;
+  second = second + 0.5 - (second < 0);
+  clock[1] = (int) second;
 }

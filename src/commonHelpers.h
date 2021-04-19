@@ -30,4 +30,9 @@ int getIntFromRange(int min, int max);
 // ---------------------------------------------------------
 void getFileCString(FILE* file, char* string, int max, char endSymbol);
 
+// ---------------------------------------------------------
+// Convert float time to clock
+// ---------------------------------------------------------
+void timeConvert(double time, int clock[]);
+
 #endif

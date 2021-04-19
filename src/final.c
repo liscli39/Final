@@ -1,16 +1,21 @@
 // ===================================================================================
-//
 //  Description: Main
-//
-//
+// ===================================================================================
+//  Student Name  : Vy Le
+//  Student ID    : 126487206
+//  Student Email : tpvle@myseneca.ca
+//  Course Section: NHH
 // ===================================================================================
 
-#include <stdio.h>
 
+// User-Defined Libraries
 #include "phoneDataManager.h"
 
+// System Libraries
+#include <stdio.h>
+
 // System Data Array sizes
-#define USER_LIST_SIZE 10
+#define USER_LIST_SIZE 50
 
 int main(void)
 {

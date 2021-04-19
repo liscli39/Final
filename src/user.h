@@ -38,19 +38,14 @@ struct User {
 double sumDuration(struct User user);
 
 // ---------------------------------------------------------
-// Sum duration
+// Sum data usage
 // ---------------------------------------------------------
-double sumDataUsage(struct User user);
+int sumDataUsage(struct User user);
 
 // ---------------------------------------------------------
-// Sum duration
+// Sum screen times
 // ---------------------------------------------------------
 double sumScreenTimes(struct User user);
-
-// ---------------------------------------------------------
-// Convert float time to clock
-// ---------------------------------------------------------
-void timeConvert(double time, int clock[]);
 
 // ---------------------------------------------------------
 // Swap user

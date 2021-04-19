@@ -22,7 +22,7 @@ double sumDuration(struct User user) {
   return duration;
 }
 
-double sumDataUsage(struct User user) {
+int sumDataUsage(struct User user) {
   int id, data;
   data = 0;
   for (id = 0; id < user.recordCount; id ++) {
@@ -40,12 +40,6 @@ double sumScreenTimes(struct User user) {
   }
 
   return times;
-}
-
-void timeConvert(double time, int clock[]) {
-  clock[0] = (int) time;
-  int decimal = (int)(time * 60) - (int)time * 60; 
-  clock[1] = decimal;
 }
 
 void swap(struct User* first, struct User* second) {

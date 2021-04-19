@@ -7,9 +7,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 // System Libraries
-#include <ctype.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 // User-Defined Libraries
@@ -89,25 +87,124 @@ void displayUserByCallDuration(const struct User users[], int arrSize) {
   copyArray(copy, users, arrSize);
   sortUserByDuration(copy, arrSize);
 
-  printf("User  Call Duration\n");
+  printf("                          User  Call Duration\n");
   for (id = 0; id < arrSize; id ++) {
     if (copy[id].recordCount != 0) {
       timeConvert(sumDuration(copy[id]), clock);
-      printf("%s %10d:%02d\n",copy[id].name, clock[0], clock[1]);
+      printf("%30s%12d:%02d\n",copy[id].name, clock[0], clock[1]);
+    }
+  }
+}
+
+void sortUserByDataUsage(struct User users[], int arrSize) {
+  int i, j;
+  for (i = 0; i < arrSize; i ++) {
+    for (j = i + 1; j < arrSize; j ++) {
+      if (sumDataUsage(users[i]) > sumDataUsage(users[j])) {
+        swap(&users[i], &users[j]);
+      }
     }
   }
 }
 
 void displayUserByDataUsage(const struct User users[], int arrSize) {
+  int id, recordId;
+  double callMinutes;
+  struct User copy[arrSize];
 
+  copyArray(copy, users, arrSize);
+  sortUserByDataUsage(copy, arrSize);
+
+  printf("                          User     Data Usage\n");
+  for (id = 0; id < arrSize; id ++) {
+    if (copy[id].recordCount != 0) {
+      printf("%30s%15d\n",copy[id].name, sumDataUsage(copy[id]));
+    }
+  }
+}
+
+void sortUserByScreenTime(struct User users[], int arrSize) {
+  int i, j;
+  for (i = 0; i < arrSize; i ++) {
+    for (j = i + 1; j < arrSize; j ++) {
+      if (sumScreenTimes(users[i]) > sumScreenTimes(users[j])) {
+        swap(&users[i], &users[j]);
+      }
+    }
+  }
 }
 
 void displayUserByScreenTime(const struct User users[], int arrSize) {
+  int id, recordId;
+  int clock[2];
+  double callMinutes;
+  struct User copy[arrSize];
 
+  copyArray(copy, users, arrSize);
+  sortUserByScreenTime(copy, arrSize);
+
+  printf("                          User    Screen Time\n");
+  for (id = 0; id < arrSize; id ++) {
+    if (copy[id].recordCount != 0) {
+      timeConvert(sumScreenTimes(copy[id]), clock);
+      printf("%30s%12d:%02d\n",copy[id].name, clock[0], clock[1]);
+    }
+  }
 }
 
 void displayAllUserData(const struct User users[], int arrSize) {
+  int id, recordId, header;
+  int clock[2];
 
+  for (id = 0; id < arrSize; id ++) {
+    if (users[id].recordCount != 0) {
+      printf("---------------------------------------------\n");
+      printf("User: %s\n", users[id].name);
+
+      header = 0;
+      for (recordId = 0; recordId < users[id].recordCount; recordId ++) {
+        if (users[id].records[recordId].callMinutes != 0) {
+          if (header == 0) {
+            printf("  Number Called  Duration\n");
+            header = 1;
+          }
+
+          timeConvert(users[id].records[recordId].callMinutes, clock);
+          printf(
+            "%15s %6d:%d\n", 
+            users[id].records[recordId].callNumber,
+            clock[0], clock[1]
+          );
+        }
+      }
+
+      header = 0;
+      for (recordId = 0; recordId < users[id].recordCount; recordId ++) {
+        if (users[id].records[recordId].dataBytes != 0) {
+          if (header == 0) {
+            printf("Bytes Transferred\n");
+            header = 1;
+          }
+
+          printf("%18d\n", users[id].records[recordId].dataBytes);
+        }
+      }
+
+      header = 0;
+      for (recordId = 0; recordId < users[id].recordCount; recordId ++) {
+        if (users[id].records[recordId].screenTimes != 0) {
+          if (header == 0) {
+            printf("Screen Minutes\n");
+            header = 1;
+          }
+
+          timeConvert(users[id].records[recordId].screenTimes, clock);
+          printf("%12d:%02d\n", clock[0], clock[1]);
+        }
+      }
+
+    }
+  }
 }
 
 int menu(const struct User users[], int arrSize) {
@@ -126,6 +223,21 @@ int menu(const struct User users[], int arrSize) {
     switch (choose) {
       case 1: {
         displayUserByCallDuration(users, arrSize);
+        break;
+      }
+
+      case 2: {
+        displayUserByDataUsage(users, arrSize);
+        break;
+      }
+
+      case 3: {
+        displayUserByScreenTime(users, arrSize);
+        break;
+      }
+
+      case 4: {
+        displayAllUserData(users, arrSize);
         break;
       }
 
